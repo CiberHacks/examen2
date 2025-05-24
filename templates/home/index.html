@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <table class="table table-striped">
+        <thead>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+            <th>Actions</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td><a href="" class="btn btn-outline-info">Detail</a></td>
+                <td><a href="" class="btn btn-outline-warning">Update</a></td>
+                <td><a href="" class="btn btn-outline-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
