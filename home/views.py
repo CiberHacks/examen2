@@ -16,4 +16,3 @@ class index(generic.View):
             "users": User.objects.all()
         }
         return render(request, self.template_name, self.context)
-
