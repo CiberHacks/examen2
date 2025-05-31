@@ -6,6 +6,7 @@ app_name = "core"
 
 urlpatterns = [
     path('list/banks/', views.ListBank.as_view(), name="list_bank"),
+    path('create/banks/', views.CreateBank.as_view(), name="create_bank"),
     path('detail/bank/<int:pk>', views.DetailBank.as_view(), name="detail_bank")
 
     

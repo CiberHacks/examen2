@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from core import models
+from django.urls import reverse_lazy
 
+from core import forms
 # Create your views here.
 
 class ListBank(generic.View):
@@ -26,3 +28,9 @@ class DetailBank(generic.View):
                 'banks': models.Bank.objects.get(pk=pk)
             }
             return render(request, self.template_name, self.context)
+    
+class CreateBank(generic.CreateView):
+    template_name = "core/create_bank.html"
+    model = models.Bank
+    form_class = forms.CreateBankForm
+    success_url = reverse_lazy("core:list_bank")
