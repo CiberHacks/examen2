@@ -24,8 +24,8 @@
             <td>{{ bank.address }}</td>
             <td>{{ bank.status }}</td>
             <td><a href=" {% url 'core:detail_bank' bank.id %}" class="btn btn-info">Detail</a></td>
-            <td><a href="" class="btn btn-warning">Update</a></td>
-            <td><a href="" class="btn btn-danger">Delete</a></td>
+            <td><a href=" {% url 'core:update_bank' bank.id %}" class="btn btn-warning">Update</a></td>
+            <td><a href="{% url 'core:delete_bank' bank.id %}" class="btn btn-danger">Delete</a></td>
 
         </tr>
         {% endfor%}

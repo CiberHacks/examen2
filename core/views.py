@@ -34,3 +34,15 @@ class CreateBank(generic.CreateView):
     model = models.Bank
     form_class = forms.CreateBankForm
     success_url = reverse_lazy("core:list_bank")
+
+
+class UpdateBank(generic.UpdateView):
+    template_name = "core/update_bank.html"
+    model = models.Bank
+    form_class = forms.UpdateBankForm
+    success_url = reverse_lazy("core:list_bank")
+
+class DeleteBank(generic.DeleteView):
+    template_name = "core/delete_bank.html"
+    model = models.Bank
+    success_url = reverse_lazy("core:list_bank")
