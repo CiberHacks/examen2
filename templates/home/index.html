@@ -1,13 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% block title %}INDEX VIEW{% endblock title%}
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <h1>Bienvenido User: {{ request.user.username }}</h1>
     <table class="table table-striped">
         <thead>
             <th>ID</th>
@@ -31,5 +26,13 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+                {{ loginForm }}
+                <button type="submit" class="btn btn-success">Login</button>
+        </form>
+    
+
+    {% endif %}
+{% endblock content%}

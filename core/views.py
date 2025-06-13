@@ -2,13 +2,15 @@ from django.shortcuts import render
 from django.views import generic
 from core import models
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core import forms
 # Create your views here.
 
-class ListBank(generic.View):
+class ListBank(LoginRequiredMixin, generic.View):
     template_name = 'core/list_bank.html'
     context = {}
+    login_url = "home:index"
 
 
     def get(self, request):
@@ -18,9 +20,10 @@ class ListBank(generic.View):
             return render(request, self.template_name, self.context)
     
 
-class DetailBank(generic.View):
+class DetailBank(LoginRequiredMixin, generic.View):
     template_name = 'core/detail_bank.html'
     context = {}
+    login_url = "home:index"
 
 
     def get(self, request, pk):
@@ -29,20 +32,23 @@ class DetailBank(generic.View):
             }
             return render(request, self.template_name, self.context)
     
-class CreateBank(generic.CreateView):
+class CreateBank(LoginRequiredMixin, generic.CreateView):
     template_name = "core/create_bank.html"
     model = models.Bank
     form_class = forms.CreateBankForm
     success_url = reverse_lazy("core:list_bank")
+    login_url = "home:index"
 
 
-class UpdateBank(generic.UpdateView):
+class UpdateBank(LoginRequiredMixin, generic.UpdateView):
     template_name = "core/update_bank.html"
     model = models.Bank
     form_class = forms.UpdateBankForm
     success_url = reverse_lazy("core:list_bank")
+    login_url = "home:index"
 
-class DeleteBank(generic.DeleteView):
+class DeleteBank(LoginRequiredMixin, generic.DeleteView):
     template_name = "core/delete_bank.html"
     model = models.Bank
     success_url = reverse_lazy("core:list_bank")
+    login_url = "home:index"
