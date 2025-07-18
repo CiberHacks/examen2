@@ -1,28 +1,11 @@
 from django import forms
 from core import models
 
-class CreateBankForm(forms.ModelForm):
+class ToDoForm(forms.ModelForm):
     class Meta:
-        model = models.Bank
-        fields = [
-            "bank_name",
-            "address",
-            "status",
-        ]
+        model = models.ToDo
+        fields = ['title', 'is_completed']
         widgets = {
-            "bank_name": forms.TextInput(attrs={"type": "text", "class": "from-control", "placeholder": "Escribe el nombre del banco"}),
-            "address": forms.TextInput(attrs={"type": "text", "class": "from-control", "placeholder": "Escribe la dirección del banco"}),
-        }
-
-class UpdateBankForm(forms.ModelForm):
-    class Meta:
-        model = models.Bank
-        fields = [
-            "bank_name",
-            "address",
-            "status",
-        ]
-        widgets = {
-            "bank_name": forms.TextInput(attrs={"type": "text", "class": "from-control", "placeholder": "Escribe el nombre del banco"}),
-            "address": forms.TextInput(attrs={"type": "text", "class": "from-control", "placeholder": "Escribe la dirección del banco"}),
+            "title": forms.TextInput(attrs={"class": "form-control", "placeholder": "Título del pendiente"}),
+            "is_completed": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }

@@ -1,10 +1,9 @@
-from .models import *
 from django.contrib import admin
+from .models import ToDo
 
-
-admin.site.register(Bank)
-admin.site.register(Currency)
-admin.site.register(AccountBank)
-admin.site.register(CategoryProvider)
-admin.site.register(Provider)
-admin.site.register(Payment)
+@admin.register(ToDo)
+class ToDoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'user', 'is_completed', 'created_at')
+    list_filter = ('is_completed', 'created_at')
+    search_fields = ('title', 'user__username')
+    ordering = ('-created_at',)

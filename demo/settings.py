@@ -82,16 +82,13 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-"default": {
+    "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "prueba_django",
         "USER": "Ciber",
         "PASSWORD": "951736842",
         "HOST": "127.0.0.1",
         "PORT": "3306",
-        "OPTIONS": {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
     }
 }
 

@@ -1,0 +1,94 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}Pendientes Internos{% endblock title %}
+
+{% block content %}
+<h1>Lista de Pendientes Internos</h1>
+
+<nav>
+    <a href="?filter=all{% if user_filter %}&user={{ user_filter }}{% endif %}">Todos</a> |
+    <a href="?filter=pending{% if user_filter %}&user={{ user_filter }}{% endif %}">Pendientes</a> |
+    <a href="?filter=done{% if user_filter %}&user={{ user_filter }}{% endif %}">Resueltos</a> |
+    <a href="?filter=ids{% if user_filter %}&user={{ user_filter }}{% endif %}">Solo IDs</a> |
+    <a href="?filter=id_title{% if user_filter %}&user={{ user_filter }}{% endif %}">ID y Título</a> |
+    <a href="?filter=id_user{% if user_filter %}&user={{ user_filter }}{% endif %}">ID y UserID</a> |
+    <a href="?filter=done_user{% if user_filter %}&user={{ user_filter }}{% endif %}">Resueltos con UserID</a> |
+    <a href="?filter=pending_user{% if user_filter %}&user={{ user_filter }}{% endif %}">Pendientes con UserID</a>
+</nav>
+
+<p>
+    <a href="{% url 'core:todo_create' %}" class="btn btn-success">Crear Nuevo Pendiente</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            {% if is_all_pending_done %}
+                <th>ID</th>
+                <th>Título</th>
+                <th>Completado</th>  <!-- Solo para "Todos" -->
+                <th>UserID</th>
+                <th>Acciones</th>
+            {% elif is_ids %}
+                <th>ID</th>
+                <th>Acciones</th>
+            {% else %}
+                <th>ID</th>
+                {% if not is_id_title %}  <!-- En id_title no hay UserID -->
+                    <th>UserID</th>
+                {% endif %}
+                {% if is_id_title %}
+                    <th>Título</th>
+                {% endif %}
+                <th>Acciones</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos %}
+        <tr>
+            {% if is_all_pending_done %}
+                <td>{{ todo.id }}</td>
+                <td>{{ todo.title }}</td>
+                <td>{% if todo.is_completed %}Sí{% else %}No{% endif %}</td>  <!-- Solo para "Todos" -->
+                <td>{{ todo.user }}</td>
+                <td>
+                    <a href="{% url 'core:todo_detail' todo.id %}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{% url 'core:todo_update' todo.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'core:todo_delete' todo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            {% elif is_ids %}
+                <td>{{ todo.id }}</td>
+                <td>
+                    <a href="{% url 'core:todo_detail' todo.id %}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{% url 'core:todo_update' todo.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'core:todo_delete' todo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            {% elif is_id_title %}
+                <td>{{ todo.id }}</td>
+                <td>{{ todo.title }}</td>
+                <td>
+                    <a href="{% url 'core:todo_detail' todo.id %}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{% url 'core:todo_update' todo.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'core:todo_delete' todo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            {% else %}
+                <td>{{ todo.id }}</td>
+                <td>{{ todo.user }}</td>
+                <td>
+                    <a href="{% url 'core:todo_detail' todo.id %}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{% url 'core:todo_update' todo.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'core:todo_delete' todo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay pendientes para mostrar.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
